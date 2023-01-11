@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:food_order_app/screen/signup_page.dart';
 
+import 'admin_page.dart';
 import 'login_page.dart';
 
 class WelcomePage extends StatelessWidget {
@@ -8,6 +10,14 @@ class WelcomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+
+        leading: ElevatedButton(onPressed: (){ Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => AdminPage()),
+        );}, child: Icon(Icons.admin_panel_settings,color: Colors.orangeAccent,size: 35,)),
+      ),
         body: Column(
       children: [
         Expanded(
@@ -32,7 +42,8 @@ class WelcomePage extends StatelessWidget {
             ),
             Container(height: 10,),
             Column(
-              children: [
+
+              children:[
                 Text(
                   'Now Order Canteen food with your mobile ',
                   style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
@@ -45,7 +56,12 @@ class WelcomePage extends StatelessWidget {
                     width: 300,
                     height: 60,
                     child: ElevatedButton(
-                      onPressed: (){},
+                      onPressed: (){
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => LoginPage()),
+                        );
+                      },
                       child: Text(
                         'Log In',
                         style: TextStyle(fontSize: 30),
@@ -61,7 +77,12 @@ class WelcomePage extends StatelessWidget {
                     width: 300,
                     height: 60,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SignUp()),
+                    );
+                  },
                   child: Text(
                     'Sign Up',
                     style: TextStyle(fontSize: 30,color: Colors.black),

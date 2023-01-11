@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:food_order_app/widgets/text_field.dart';
 
+import 'home_page.dart';
+
 class LoginPage extends StatelessWidget {
 
 
@@ -45,7 +47,10 @@ class LoginPage extends StatelessWidget {
                 height: 60,
                 width: 200,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) =>  HomePage()),
+                  );},
                   child: Text('Log In'),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.grey,

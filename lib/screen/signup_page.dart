@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:food_order_app/screen/home_page.dart';
 import 'package:food_order_app/widgets/text_field.dart';
 
 class SignUp extends StatelessWidget {
@@ -96,7 +97,12 @@ class SignUp extends StatelessWidget {
                 height: 60,
                 width: 200,
                 child: ElevatedButton(
-                  onPressed:validation,
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => HomePage()),
+                    );
+                  },
 
                   child: Text('Sign Up'),
                   style: ElevatedButton.styleFrom(
