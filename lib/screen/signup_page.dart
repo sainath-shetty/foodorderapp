@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:food_order_app/widgets/text_field.dart';
 
@@ -11,6 +12,17 @@ class SignUp extends StatelessWidget {
   TextEditingController Mobile = TextEditingController();
 
   final globalScaffoldKey = GlobalKey<ScaffoldMessengerState>();
+
+
+  Future sendData() async{
+    await FirebaseFirestore.instance.collection('userData').doc().set({
+      "Name":Name.text,
+      "Password":Password.text,
+      "Email":Email.text,
+      "Mobile":Mobile.text,
+
+    });
+  }
 
   void validation() {
 
