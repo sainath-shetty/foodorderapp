@@ -1,9 +1,15 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:food_order_app/screen/add_new_food.dart';
 
-class AdminPage extends StatelessWidget {
-  const AdminPage({Key? key}) : super(key: key);
+class AdminPage extends StatefulWidget {
 
+
+  @override
+  State<AdminPage> createState() => _AdminPageState();
+}
+
+class _AdminPageState extends State<AdminPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
