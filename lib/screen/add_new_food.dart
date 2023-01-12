@@ -11,7 +11,7 @@ import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
-import '../firebase_api.dart';
+
 
 class AddFood extends StatefulWidget {
   @override

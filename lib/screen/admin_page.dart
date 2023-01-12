@@ -1,16 +1,29 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:food_order_app/screen/add_new_food.dart';
 
 class AdminPage extends StatefulWidget {
 
 
-  @override
+
+
   State<AdminPage> createState() => _AdminPageState();
+
 }
 
 class _AdminPageState extends State<AdminPage> {
+  late Future<ListResult> futureFiles;
   @override
+  @override
+  void initState()
+  {
+    super.initState();
+    FirebaseStorage.instance.ref('/files').listAll();
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
@@ -37,10 +50,12 @@ class _AdminPageState extends State<AdminPage> {
                 width: 200,
                 height: 200,
                 child: ElevatedButton(
-                  onPressed: () { Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => AddFood()),
-                  );},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => AddFood()),
+                    );
+                  },
                   child: Image.asset('images/add_menu.png'),
                 ),
               ),
@@ -57,8 +72,133 @@ class _AdminPageState extends State<AdminPage> {
                     TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
               ),
             ],
-          )
+          ),
+          SizedBox(
+            height: 15,
+          ),
+          Center(
+              child: Container(
+            child: ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => Read()));
+              },
+              child: Text(
+                'List of Food Items ',
+                style: TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white),
+              ),
+            ),
+          ))
           //here display the list of food shown to the user and give the option to show the food or not
+        ],
+      ),
+    );
+  }
+}
+
+class Read extends StatelessWidget {
+  const Read({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        body: StreamBuilder(
+
+          stream: FirebaseFirestore.instance.collection('food').snapshots(),
+          builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            if (snapshot.hasData) {
+              return ListView.builder(
+                itemCount: snapshot.data?.docs.length,
+                itemBuilder: (context, i) {
+                  QueryDocumentSnapshot x = snapshot.data!.docs[i];
+                  return Container(
+                    height: 1000,
+                    child: GridView.count(
+                      shrinkWrap: false,
+                      primary: false,
+                      crossAxisCount: 2,
+                      childAspectRatio: 0.8,
+                      crossAxisSpacing: 20,
+                      mainAxisSpacing: 20,
+                      children: [
+                        for(var item in snapshot.data!.docs)
+                           bottomContainer(
+                              image: (item["foodimage"]),
+                              title: item["foodtitle"],
+                              price: item["foodprice"],
+                           ),
+
+                      ],
+                    ),
+                  );
+                },
+              );
+            }
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          },
+        ),
+      ),
+    );
+  }
+
+  bottomContainer(
+      {required String image, required String title, required String price}) {
+    return Container(
+      height: 200,
+      width: 200,
+      decoration: BoxDecoration(
+        color: Colors.orangeAccent,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          CircleAvatar(
+            radius: 60,
+           child: Image.network(image),
+          ),
+          ListTile(
+            leading: Text(
+              title,
+              style: TextStyle(fontSize: 20, color: Colors.white),
+            ),
+            trailing: Text(
+              "Rs $price",
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              children: [
+                Icon(
+                  Icons.star,
+                  size: 20,
+                  color: Colors.white,
+                ),
+                Icon(
+                  Icons.star,
+                  size: 20,
+                  color: Colors.white,
+                ),
+                Icon(
+                  Icons.star,
+                  size: 20,
+                  color: Colors.white,
+                ),
+                Icon(
+                  Icons.star,
+                  size: 20,
+                  color: Colors.white,
+                ),
+              ],
+            ),
+          )
         ],
       ),
     );

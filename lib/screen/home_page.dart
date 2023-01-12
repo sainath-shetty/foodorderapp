@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
-  Widget bottomContainer(
-      {required String image, required String title, required int price}) {
+  Widget bottomContainer({required String image, required String title, required int price}) {
     return Container(
       height: 200,
       width: 200,
