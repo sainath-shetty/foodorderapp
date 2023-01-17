@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_order_app/screen/admin_login_page.dart';
 import 'package:food_order_app/screen/signup_page.dart';
 
 import 'admin_page.dart';
@@ -15,7 +16,7 @@ class WelcomePage extends StatelessWidget {
 
         leading: ElevatedButton(onPressed: (){ Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => AdminPage()),
+          MaterialPageRoute(builder: (context) => adminLoginPage()),
         );}, child: Icon(Icons.admin_panel_settings,color: Colors.orangeAccent,size: 35,)),
       ),
         body: Column(

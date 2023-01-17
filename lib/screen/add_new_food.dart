@@ -13,6 +13,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 
 
 
+
 class AddFood extends StatefulWidget {
   @override
   State<AddFood> createState() => _AddFoodState();
@@ -33,6 +34,7 @@ class _AddFoodState extends State<AddFood> {
   //
   //   }
   // }
+  static String imageUrl="";
   PlatformFile?pickedFile;
   Future selectFile() async {
     final result=await FilePicker.platform.pickFiles();
@@ -41,10 +43,16 @@ class _AddFoodState extends State<AddFood> {
   }
   Future uploadFile() async{
 
-    final path='files/${pickedFile!.name}';
+    final path='image/${pickedFile!.name}';
     final file=File(pickedFile!.path!);
     final ref =FirebaseStorage.instance.ref().child(path);
     ref.putFile(file);
+    ref.getDownloadURL().then((value) {
+      print(value);
+      setState(() {
+        imageUrl=value;
+      });
+    });
 
   }
   //upload the image to the firebase storage
@@ -62,6 +70,8 @@ class _AddFoodState extends State<AddFood> {
       'foodrating': _stars.text.trim(),
     });
   }
+
+
 
 
 

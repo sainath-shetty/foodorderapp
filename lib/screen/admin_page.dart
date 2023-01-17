@@ -17,12 +17,14 @@ class AdminPage extends StatefulWidget {
 class _AdminPageState extends State<AdminPage> {
   late Future<ListResult> futureFiles;
   @override
-  @override
+
   void initState()
   {
     super.initState();
     FirebaseStorage.instance.ref('/files').listAll();
   }
+
+
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -99,8 +101,9 @@ class _AdminPageState extends State<AdminPage> {
   }
 }
 
-class Read extends StatelessWidget {
-  const Read({Key? key}) : super(key: key);
+class Read extends StatelessWidget{
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -126,10 +129,12 @@ class Read extends StatelessWidget {
                       mainAxisSpacing: 20,
                       children: [
                         for(var item in snapshot.data!.docs)
+
                            bottomContainer(
                               image: (item["foodimage"]),
                               title: item["foodtitle"],
                               price: item["foodprice"],
+                             stars:item["foodrating"],
                            ),
 
                       ],
@@ -148,7 +153,7 @@ class Read extends StatelessWidget {
   }
 
   bottomContainer(
-      {required String image, required String title, required String price}) {
+      {required String image, required String title, required String price ,required String stars}) {
     return Container(
       height: 200,
       width: 200,
@@ -161,7 +166,6 @@ class Read extends StatelessWidget {
         children: [
           CircleAvatar(
             radius: 60,
-           child: Image.network(image),
           ),
           ListTile(
             leading: Text(
@@ -176,29 +180,17 @@ class Read extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: Row(
               children: [
+                for(int i=0;i<int.parse(stars);i++)
                 Icon(
                   Icons.star,
                   size: 20,
                   color: Colors.white,
                 ),
-                Icon(
-                  Icons.star,
-                  size: 20,
-                  color: Colors.white,
-                ),
-                Icon(
-                  Icons.star,
-                  size: 20,
-                  color: Colors.white,
-                ),
-                Icon(
-                  Icons.star,
-                  size: 20,
-                  color: Colors.white,
-                ),
+
               ],
             ),
-          )
+          ),
+
         ],
       ),
     );

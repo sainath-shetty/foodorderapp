@@ -1,16 +1,19 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:food_order_app/screen/add_new_food.dart';
 import 'package:food_order_app/screen/welcome_page.dart';
 import 'package:food_order_app/widgets/text_field.dart';
 import 'package:get/get.dart';
 
-import 'home_page.dart';
 
-class LoginPage extends StatelessWidget {
-  final _formkey = GlobalKey<FormState>();
+class adminLoginPage extends StatelessWidget {
+
+
+
+    final _formkey = GlobalKey<FormState>();
   TextEditingController loginEmail = TextEditingController();
   TextEditingController loginPassword = TextEditingController();
 
@@ -88,8 +91,8 @@ class LoginPage extends StatelessWidget {
         .get()
         .then((DocumentSnapshot documentSnapshot) {
       if (documentSnapshot.exists) {
-        if (documentSnapshot.get('roll') == "user") {
-          Get.to(() => HomePage());
+        if (documentSnapshot.get('roll') == "admin") {
+          Get.to(() => AddFood());
         }
       } else {
         print('Document does not exist on the database');

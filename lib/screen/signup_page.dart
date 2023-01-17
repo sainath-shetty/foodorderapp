@@ -1,34 +1,26 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:food_order_app/screen/home_page.dart';
+import 'package:food_order_app/services/signUpServices.dart';
 import 'package:food_order_app/widgets/text_field.dart';
 
 class SignUp extends StatelessWidget {
   TextEditingController Name = TextEditingController();
-
   TextEditingController Password = TextEditingController();
-
   TextEditingController Email = TextEditingController();
-
   TextEditingController Mobile = TextEditingController();
-
+  User? currentUser = FirebaseAuth.instance.currentUser;
   final globalScaffoldKey = GlobalKey<ScaffoldMessengerState>();
 
-
-  Future sendData() async{
-    await FirebaseFirestore.instance.collection('userData').doc().set({
-      "Name":Name.text,
-      "Password":Password.text,
-      "Email":Email.text,
-      "Mobile":Mobile.text,
-
-    });
-  }
-
   void validation() {
-
-    if (Password.text.trim().isEmpty||Password.text.trim()==null) {
-      globalScaffoldKey.currentState?.showSnackBar(SnackBar(content: Text("Password is empty"),duration:Duration(seconds: 3),));
+    if (Password.text.trim().isEmpty || Password.text.trim() == null) {
+      globalScaffoldKey.currentState?.showSnackBar(SnackBar(
+        content: Text("Password is empty"),
+        duration: Duration(seconds: 3),
+      ));
     }
     return;
   }
@@ -36,7 +28,6 @@ class SignUp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       appBar: AppBar(
         backgroundColor: Colors.grey,
         leading: IconButton(
@@ -54,19 +45,19 @@ class SignUp extends StatelessWidget {
           children: [
             Center(
                 child: Text(
-              'Sign Up',
-              style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold),
-            )),
+                  'Sign Up',
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold),
+                )),
             Column(
               key: globalScaffoldKey,
               children: [
                 MyTextField(
+                  controller: Name,
                   hintText: "Name",
                   obscureText: false,
-                  controller: Name,
                 ),
                 SizedBox(
                   height: 30,
@@ -97,13 +88,21 @@ class SignUp extends StatelessWidget {
                 height: 60,
                 width: 200,
                 child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => HomePage()),
-                    );
-                  },
+                  onPressed: () async {
+                    var userName = Name.text.trim();
+                    var userPhone = Mobile.text.trim();
+                    var userEmail = Email.text.trim();
+                    var userPassword = Password.text.trim();
 
+                    await FirebaseAuth.instance
+                        .createUserWithEmailAndPassword(
+                        email: userEmail, password: userPassword)
+                        .then((value) => {
+                      log("User created"),
+                      signUpUser(
+                          userName, userPhone, userEmail, userPassword)
+                    });
+                  },
                   child: Text('Sign Up'),
                   style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.grey,
