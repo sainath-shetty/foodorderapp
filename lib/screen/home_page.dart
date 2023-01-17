@@ -209,8 +209,84 @@ class HomePage extends StatelessWidget {
 //stateless widget for displaying the all category list of food items
 
 class ALL extends StatelessWidget {
+
+
   @override
   Widget build(BuildContext context) {
+
+    bottomContainer(
+        {required String image,
+          required String title,
+          required String price,
+          required String stars,
+          required String category}) {
+      return Container(
+        height: 200,
+        width: 200,
+        decoration: BoxDecoration(
+          color: Colors.orangeAccent,
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            CircleAvatar(
+              radius: 60,
+              backgroundColor: Colors.orange,
+              //here apply background image
+
+            ),
+            ListTile(
+              leading: Text(
+                title,
+                style: TextStyle(fontSize: 20, color: Colors.white),
+              ),
+              trailing: Text(
+                "Rs $price",
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  for (int i = 0; i < int.parse(stars); i++)
+                    Icon(
+                      Icons.star,
+                      size: 20,
+                      color: Colors.white,
+                    ),
+                  SizedBox(
+                    width: 25,
+                  ),
+                  ElevatedButton.icon(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => AddToCart(image, title, price, stars, category),
+                          ));
+
+      },
+
+                        // AddToCart(image, title, price, stars, category),
+                    icon: Icon(
+                      // <-- Icon
+                      Icons.food_bank_outlined,
+                      color: Colors.white,
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.purple,
+                    ),
+                    label: Text('buy'), // <-- Text
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
+      );
+    }
+
     return MaterialApp(
       home: Scaffold(
         body: StreamBuilder(
@@ -250,71 +326,14 @@ class ALL extends StatelessWidget {
             );
           },
         ),
+
       ),
+
     );
+
+
   }
 
-  bottomContainer(
-      {required String image,
-      required String title,
-      required String price,
-      required String stars,
-      required String category}) {
-    return Container(
-      height: 200,
-      width: 200,
-      decoration: BoxDecoration(
-        color: Colors.orangeAccent,
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          CircleAvatar(
-            radius: 60,
-          ),
-          ListTile(
-            leading: Text(
-              title,
-              style: TextStyle(fontSize: 20, color: Colors.white),
-            ),
-            trailing: Text(
-              "Rs $price",
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              children: [
-                for (int i = 0; i < int.parse(stars); i++)
-                  Icon(
-                    Icons.star,
-                    size: 20,
-                    color: Colors.white,
-                  ),
-                SizedBox(
-                  width: 25,
-                ),
-                ElevatedButton.icon(
-                  onPressed: () =>
-                      AddToCart(image, title, price, stars, category),
-                  icon: Icon(
-                    // <-- Icon
-                    Icons.food_bank_outlined,
-                    color: Colors.white,
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.purple,
-                  ),
-                  label: Text('buy'), // <-- Text
-                ),
-              ],
-            ),
-          )
-        ],
-      ),
-    );
-  }
 }
 
 //widgets which is used to display the list of all the food items which come under the snacks category
@@ -322,8 +341,81 @@ class ALL extends StatelessWidget {
 class Snacks extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+
+    bottomContainer(
+        {required String image,
+          required String title,
+          required String price,
+          required String stars,
+          required String category}) {
+      return Container(
+        height: 200,
+        width: 200,
+        decoration: BoxDecoration(
+          color: Colors.orangeAccent,
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            CircleAvatar(
+              radius: 60,
+            ),
+            ListTile(
+              leading: Text(
+                title,
+                style: TextStyle(fontSize: 20, color: Colors.white),
+              ),
+              trailing: Text(
+                "Rs $price",
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  for (int i = 0; i < int.parse(stars); i++)
+                    Icon(
+                      Icons.star,
+                      size: 20,
+                      color: Colors.white,
+                    ),
+                  SizedBox(
+                    width: 25,
+                  ),
+                  ElevatedButton.icon(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => AddToCart(image, title, price, stars, category),
+                          ));
+
+                    },
+
+                    // AddToCart(image, title, price, stars, category),
+                    icon: Icon(
+                      // <-- Icon
+                      Icons.food_bank_outlined,
+                      color: Colors.white,
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.purple,
+                    ),
+                    label: Text('buy'), // <-- Text
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
+      );
+    }
+
     return MaterialApp(
       home: Scaffold(
+
+
         body: StreamBuilder(
           stream: FirebaseFirestore.instance.collection('food').snapshots(),
           builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -365,69 +457,7 @@ class Snacks extends StatelessWidget {
     );
   }
 
-  bottomContainer(
-      {required String image,
-      required String title,
-      required String price,
-      required String stars,
-      required String category}) {
-    return Container(
-      height: 200,
-      width: 200,
-      decoration: BoxDecoration(
-        color: Colors.orangeAccent,
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          CircleAvatar(
-            radius: 60,
-          ),
-          ListTile(
-            leading: Text(
-              title,
-              style: TextStyle(fontSize: 20, color: Colors.white),
-            ),
-            trailing: Text(
-              "Rs $price",
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              children: [
-                for (int i = 0; i < int.parse(stars); i++)
-                  Icon(
-                    Icons.star,
-                    size: 20,
-                    color: Colors.white,
-                  ),
-                SizedBox(
-                  width: 25,
-                ),
-                ElevatedButton.icon(
-                  onPressed: () {
-                    AddToCart(image, title, price, stars, category);
-                  },
 
-                  icon: Icon(
-                    // <-- Icon
-                    Icons.food_bank_outlined,
-                    color: Colors.white,
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.purple,
-                  ),
-                  label: Text('buy'), // <-- Text
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 }
 
 //widget to display the food which is having the category as LUNCH
@@ -435,6 +465,77 @@ class Snacks extends StatelessWidget {
 class Lunch extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+
+    bottomContainer(
+        {required String image,
+          required String title,
+          required String price,
+          required String stars,
+          required String category}) {
+      return Container(
+        height: 200,
+        width: 200,
+        decoration: BoxDecoration(
+          color: Colors.orangeAccent,
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            CircleAvatar(
+              radius: 60,
+            ),
+            ListTile(
+              leading: Text(
+                title,
+                style: TextStyle(fontSize: 20, color: Colors.white),
+              ),
+              trailing: Text(
+                "Rs $price",
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  for (int i = 0; i < int.parse(stars); i++)
+                    Icon(
+                      Icons.star,
+                      size: 20,
+                      color: Colors.white,
+                    ),
+                  SizedBox(
+                    width: 25,
+                  ),
+                  ElevatedButton.icon(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => AddToCart(image, title, price, stars, category),
+                          ));
+
+                    },
+
+                    // AddToCart(image, title, price, stars, category),
+                    icon: Icon(
+                      // <-- Icon
+                      Icons.food_bank_outlined,
+                      color: Colors.white,
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.purple,
+                    ),
+                    label: Text('buy'), // <-- Text
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
+      );
+    }
+
     return MaterialApp(
       home: Scaffold(
         body: StreamBuilder(
@@ -478,65 +579,5 @@ class Lunch extends StatelessWidget {
     );
   }
 
-  bottomContainer(
-      {required String image,
-      required String title,
-      required String price,
-      required String stars,
-      required String category}) {
-    return Container(
-      height: 300,
-      width: 300,
-      decoration: BoxDecoration(
-        color: Colors.orangeAccent,
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          CircleAvatar(
-            radius: 60,
-          ),
-          ListTile(
-            leading: Text(
-              title,
-              style: TextStyle(fontSize: 20, color: Colors.white),
-            ),
-            trailing: Text(
-              "Rs $price",
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              children: [
-                for (int i = 0; i < int.parse(stars); i++)
-                  Icon(
-                    Icons.star,
-                    size: 20,
-                    color: Colors.white,
-                  ),
-                SizedBox(
-                  width: 25,
-                ),
-                ElevatedButton.icon(
-                  onPressed: () =>
-                      AddToCart(image, title, price, stars, category),
-                  icon: Icon(
-                    // <-- Icon
-                    Icons.food_bank_outlined,
-                    color: Colors.white,
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.purple,
-                  ),
-                  label: Text('buy'), // <-- Text
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+
 }
