@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_order_app/screen/payment.dart';
 import 'package:food_order_app/widgets/text_field.dart';
 
 class AddToCart extends StatelessWidget {
@@ -8,14 +9,9 @@ class AddToCart extends StatelessWidget {
   String stars = "";
   String category = "";
   TextEditingController quantity = TextEditingController();
-  TextEditingController Amount = TextEditingController();
 
-  String AmounttobePaid(String quantity, String price) {
-    Amount.text = "0";
-    Amount.text = (int.parse(quantity) * int.parse(price)).toString();
-    
-    return Amount.text;
-  }
+
+
 
   AddToCart(this.image, this.title, this.price, this.stars, this.category);
 
@@ -93,7 +89,11 @@ class AddToCart extends StatelessWidget {
          
           
           ElevatedButton(onPressed: (){
-            print(Amount);
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => Payment(quantity,price),
+                ));
           }, child: Text("Pay "))
 
         ],
