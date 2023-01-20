@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class Payment extends StatelessWidget {
@@ -5,7 +6,15 @@ class Payment extends StatelessWidget {
   String price = "";
   String title = "";
 
-  Payment(this.quantity, this.price);
+  Payment(this.quantity, this.price,this.title);
+  create() async {
+    DocumentReference documentReference =
+    await FirebaseFirestore.instance.collection("Payment").add({
+      "foodtitle":title,
+      "quantity":quantity.text,
+      "Total Price":((int.parse(quantity.text) * int.parse(price))).toString(),
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,21 +39,21 @@ class Payment extends StatelessWidget {
                         style: TextStyle(color: Colors.black, fontSize: 22,fontWeight: FontWeight.bold)),
                     Row(
 
-                        children: [
-                          SizedBox(
-                            height: 90,
-                          ),
-                          Icon(Icons.currency_rupee,size: 50,),
-                    Text(
-                      quantity.text == null
-                          ? ""
-                          : ((int.parse(quantity.text) * int.parse(price))
+                      children: [
+                        SizedBox(
+                          height: 90,
+                        ),
+                        Icon(Icons.currency_rupee,size: 50,),
+                        Text(
+                          quantity.text == null
+                              ? ""
+                              : ((int.parse(quantity.text) * int.parse(price))
                               .toString()),
-                      style: TextStyle(color: Colors.black, fontSize: 40,fontWeight: FontWeight.bold),
-                    ),],),
+                          style: TextStyle(color: Colors.black, fontSize: 40,fontWeight: FontWeight.bold),
+                        ),],),
                     SizedBox(height: 30,),
                     ElevatedButton(onPressed: (){
-
+                         create();
 
                     }, child: Text("Confirm"),style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.black26,

@@ -62,7 +62,7 @@ class _AddFoodState extends State<AddFood> {
 
   create() async {
     DocumentReference documentReference =
-        await FirebaseFirestore.instance.collection("food").add({
+        await FirebaseFirestore.instance.collection("Food").add({
           'foodimage':pickedFile!.name,
       'foodtitle': _foodtitle.text.trim(),
       'foodprice': _foodprice.text.trim(),

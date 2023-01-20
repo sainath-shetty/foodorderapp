@@ -5,9 +5,9 @@ import 'package:food_order_app/screen/add_to_cart.dart';
 class HomePage extends StatelessWidget {
   Widget bottomContainer(
       {required String image,
-      required String title,
-      required String price,
-      required String stars}) {
+        required String title,
+        required String price,
+        required String stars}) {
     return Container(
       height: 200,
       width: 200,
@@ -60,7 +60,7 @@ class HomePage extends StatelessWidget {
         actions: [
           CircleAvatar(
             backgroundImage:
-                AssetImage('images/canteenIcon-removebg-preview.png'),
+            AssetImage('images/canteenIcon-removebg-preview.png'),
           )
         ],
       ),
@@ -266,9 +266,9 @@ class ALL extends StatelessWidget {
                             builder: (context) => AddToCart(image, title, price, stars, category),
                           ));
 
-      },
+                    },
 
-                        // AddToCart(image, title, price, stars, category),
+                    // AddToCart(image, title, price, stars, category),
                     icon: Icon(
                       // <-- Icon
                       Icons.food_bank_outlined,
@@ -290,7 +290,7 @@ class ALL extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         body: StreamBuilder(
-          stream: FirebaseFirestore.instance.collection('food').snapshots(),
+          stream: FirebaseFirestore.instance.collection('Food').snapshots(),
           builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
             if (snapshot.hasData) {
               return ListView.builder(
@@ -417,7 +417,7 @@ class Snacks extends StatelessWidget {
 
 
         body: StreamBuilder(
-          stream: FirebaseFirestore.instance.collection('food').snapshots(),
+          stream: FirebaseFirestore.instance.collection('Food').snapshots(),
           builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
             if (snapshot.hasData) {
               return ListView.builder(
@@ -539,7 +539,7 @@ class Lunch extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         body: StreamBuilder(
-          stream: FirebaseFirestore.instance.collection('food').snapshots(),
+          stream: FirebaseFirestore.instance.collection('Food').snapshots(),
           builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
             if (snapshot.hasData) {
               return ListView.builder(

@@ -8,6 +8,8 @@ import 'package:food_order_app/screen/welcome_page.dart';
 import 'package:food_order_app/widgets/text_field.dart';
 import 'package:get/get.dart';
 
+import 'admin_page.dart';
+
 
 class adminLoginPage extends StatelessWidget {
 
@@ -92,7 +94,7 @@ class adminLoginPage extends StatelessWidget {
         .then((DocumentSnapshot documentSnapshot) {
       if (documentSnapshot.exists) {
         if (documentSnapshot.get('roll') == "admin") {
-          Get.to(() => AddFood());
+          Get.to(() => AdminPage());
         }
       } else {
         print('Document does not exist on the database');

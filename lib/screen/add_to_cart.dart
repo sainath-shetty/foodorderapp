@@ -75,24 +75,24 @@ class AddToCart extends StatelessWidget {
           ),
           TextFormField(
 
-              decoration: InputDecoration(labelText: "Quantity",
+            decoration: InputDecoration(labelText: "Quantity",
 
-              ),
+            ),
 
-              controller: quantity,
+            controller: quantity,
             keyboardType: TextInputType.number,
           ),
 
           SizedBox(
             height: 20,
           ),
-         
-          
+
+
           ElevatedButton(onPressed: (){
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => Payment(quantity,price),
+                  builder: (context) => Payment(quantity,price,title),
                 ));
           }, child: Text("Pay "))
 
