@@ -8,12 +8,13 @@ class AdminPage extends StatefulWidget {
 }
 
 class _AdminPageState extends State<AdminPage> {
+  int totalPayment=0;
   late Future<ListResult> futureFiles;
 
   @override
   void initState() {
     super.initState();
-    FirebaseStorage.instance.ref('/files').listAll();
+    FirebaseStorage.instance.ref('/image').listAll();
   }
 
   Widget build(BuildContext context) {
@@ -108,6 +109,8 @@ class _AdminPageState extends State<AdminPage> {
 }
 
 class Read extends StatelessWidget {
+
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -121,6 +124,7 @@ class Read extends StatelessWidget {
                 itemBuilder: (context, i) {
                   QueryDocumentSnapshot x = snapshot.data!.docs[i];
                   return Container(
+
                     height: 1000,
                     child: GridView.count(
                       shrinkWrap: false,
@@ -130,6 +134,8 @@ class Read extends StatelessWidget {
                       crossAxisSpacing: 20,
                       mainAxisSpacing: 20,
                       children: [
+
+
                         for (var item in snapshot.data!.docs)
                           bottomContainer(
                             image: item["foodimage"],
@@ -199,6 +205,7 @@ class Read extends StatelessWidget {
 }
 
 class ReadPayment extends StatelessWidget {
+  int totalPayment=0;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -221,11 +228,15 @@ class ReadPayment extends StatelessWidget {
                         crossAxisSpacing: 10,
                         mainAxisSpacing: 10,
                       children: [
+
+
                         for (var item in snapshot.data!.docs)
                           ListPayments(
+
                             Totalprice: item["Total Price"],
                             title: item["foodtitle"],
                             quantity: item["quantity"],
+
                           ),
                       ],
                     ),

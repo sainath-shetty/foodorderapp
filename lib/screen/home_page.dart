@@ -1,13 +1,19 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:food_order_app/screen/add_to_cart.dart';
-
+import 'package:food_order_app/screen/login_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 class HomePage extends StatelessWidget {
+  TextEditingController user = TextEditingController();
+
+  HomePage(this.user);
+
   Widget bottomContainer(
       {required String image,
-        required String title,
-        required String price,
-        required String stars}) {
+      required String title,
+      required String price,
+      required String stars,
+      }) {
     return Container(
       height: 200,
       width: 200,
@@ -38,7 +44,7 @@ class HomePage extends StatelessWidget {
                 for (int i = 0; i < int.parse(stars); i++)
                   Icon(
                     Icons.star,
-                    size: 20,
+                    size: 15,
                     color: Colors.white,
                   ),
               ],
@@ -56,12 +62,31 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.orange,
         elevation: 0.0,
-        leading: Icon(Icons.sort),
+        leading: IconButton(
+          icon: new Icon(Icons.arrow_back),
+          onPressed: () async {
+            SharedPreferences pref = await SharedPreferences.getInstance();
+            pref.remove("email");
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) {
+              return LoginPage();
+            }));
+          },
+        ),
         actions: [
-          CircleAvatar(
-            backgroundImage:
-            AssetImage('images/canteenIcon-removebg-preview.png'),
-          )
+          Column(
+            children: [
+              SizedBox(
+                height: 10,
+              ),
+              Text(
+                "${user.text.substring(0, 7)}",
+                style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
         ],
       ),
       body: Container(
@@ -70,21 +95,6 @@ class HomePage extends StatelessWidget {
           children: [
             Container(
               height: 5,
-            ),
-            TextField(
-              decoration: InputDecoration(
-                  hintText: "Search for Food here",
-                  hintStyle: TextStyle(color: Colors.white),
-                  prefixIcon: Icon(
-                    Icons.search,
-                    color: Colors.white,
-                  ),
-                  filled: true,
-                  fillColor: Colors.orangeAccent,
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide.none,
-                    borderRadius: BorderRadius.circular(10),
-                  )),
             ),
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
@@ -209,17 +219,17 @@ class HomePage extends StatelessWidget {
 //stateless widget for displaying the all category list of food items
 
 class ALL extends StatelessWidget {
-
+  final TextEditingController user = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-
     bottomContainer(
         {required String image,
-          required String title,
-          required String price,
-          required String stars,
-          required String category}) {
+        required String title,
+        required String price,
+        required String stars,
+        required String category,
+      }) {
       return Container(
         height: 200,
         width: 200,
@@ -234,7 +244,6 @@ class ALL extends StatelessWidget {
               radius: 60,
               backgroundColor: Colors.orange,
               //here apply background image
-
             ),
             ListTile(
               leading: Text(
@@ -252,7 +261,7 @@ class ALL extends StatelessWidget {
                   for (int i = 0; i < int.parse(stars); i++)
                     Icon(
                       Icons.star,
-                      size: 20,
+                      size: 15,
                       color: Colors.white,
                     ),
                   SizedBox(
@@ -263,9 +272,9 @@ class ALL extends StatelessWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => AddToCart(image, title, price, stars, category),
+                            builder: (context) =>
+                                AddToCart(image, title, price, stars, category),
                           ));
-
                     },
 
                     // AddToCart(image, title, price, stars, category),
@@ -295,8 +304,10 @@ class ALL extends StatelessWidget {
             if (snapshot.hasData) {
               return ListView.builder(
                 itemCount: snapshot.data?.docs.length,
+
                 itemBuilder: (context, i) {
                   QueryDocumentSnapshot x = snapshot.data!.docs[i];
+
                   return Container(
                     height: 1000,
                     child: GridView.count(
@@ -314,6 +325,7 @@ class ALL extends StatelessWidget {
                             price: item["foodprice"],
                             stars: item["foodrating"],
                             category: item["foodcategory"],
+
                           ),
                       ],
                     ),
@@ -326,28 +338,24 @@ class ALL extends StatelessWidget {
             );
           },
         ),
-
       ),
-
     );
-
-
   }
-
 }
 
 //widgets which is used to display the list of all the food items which come under the snacks category
 
 class Snacks extends StatelessWidget {
+  TextEditingController user = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
-
     bottomContainer(
         {required String image,
-          required String title,
-          required String price,
-          required String stars,
-          required String category}) {
+        required String title,
+        required String price,
+        required String stars,
+        required String category}) {
       return Container(
         height: 200,
         width: 200,
@@ -377,7 +385,7 @@ class Snacks extends StatelessWidget {
                   for (int i = 0; i < int.parse(stars); i++)
                     Icon(
                       Icons.star,
-                      size: 20,
+                      size: 15,
                       color: Colors.white,
                     ),
                   SizedBox(
@@ -388,9 +396,9 @@ class Snacks extends StatelessWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => AddToCart(image, title, price, stars, category),
+                            builder: (context) =>
+                                AddToCart(image, title, price, stars, category),
                           ));
-
                     },
 
                     // AddToCart(image, title, price, stars, category),
@@ -414,8 +422,6 @@ class Snacks extends StatelessWidget {
 
     return MaterialApp(
       home: Scaffold(
-
-
         body: StreamBuilder(
           stream: FirebaseFirestore.instance.collection('Food').snapshots(),
           builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -456,22 +462,21 @@ class Snacks extends StatelessWidget {
       ),
     );
   }
-
-
 }
 
 //widget to display the food which is having the category as LUNCH
 
 class Lunch extends StatelessWidget {
+  TextEditingController user = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
-
     bottomContainer(
         {required String image,
-          required String title,
-          required String price,
-          required String stars,
-          required String category}) {
+        required String title,
+        required String price,
+        required String stars,
+        required String category}) {
       return Container(
         height: 200,
         width: 200,
@@ -501,7 +506,7 @@ class Lunch extends StatelessWidget {
                   for (int i = 0; i < int.parse(stars); i++)
                     Icon(
                       Icons.star,
-                      size: 20,
+                      size: 15,
                       color: Colors.white,
                     ),
                   SizedBox(
@@ -512,9 +517,9 @@ class Lunch extends StatelessWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => AddToCart(image, title, price, stars, category),
+                            builder: (context) =>
+                                AddToCart(image, title, price, stars, category),
                           ));
-
                     },
 
                     // AddToCart(image, title, price, stars, category),
@@ -578,6 +583,4 @@ class Lunch extends StatelessWidget {
       ),
     );
   }
-
-
 }

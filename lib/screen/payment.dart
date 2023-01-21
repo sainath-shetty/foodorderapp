@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'Coupon.dart';
 
 class Payment extends StatelessWidget {
   TextEditingController quantity = TextEditingController();
+  TextEditingController user = TextEditingController();
   String price = "";
   String title = "";
 
@@ -20,7 +22,7 @@ class Payment extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: Icon(Icons.keyboard_backspace_outlined),
+        leading: IconButton(icon: new Icon( Icons.arrow_back),onPressed: (){ Navigator.pop(context);},),
         title: Text("Confirm Payment"),
         backgroundColor: Colors.black12,
       ),
@@ -54,6 +56,11 @@ class Payment extends StatelessWidget {
                     SizedBox(height: 30,),
                     ElevatedButton(onPressed: (){
                          create();
+                         Navigator.push(
+                             context,
+                             MaterialPageRoute(
+                               builder: (context) => Coupon(title,((int.parse(quantity.text) * int.parse(price))).toString(),quantity),
+                             ));
 
                     }, child: Text("Confirm"),style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.black26,

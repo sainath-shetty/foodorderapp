@@ -46,6 +46,9 @@ dependencies:
   get: ^4.6.5
   firebase_auth: ^4.2.5
   dart_json: ^2.0.0
+  fluttertoast: ^8.1.2
+  intl: ^0.17.0
+  shared_preferences: ^2.0.16
 
 dev_dependencies:
   flutter_test:

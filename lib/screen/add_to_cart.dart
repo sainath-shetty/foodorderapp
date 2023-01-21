@@ -4,6 +4,7 @@ import 'package:food_order_app/widgets/text_field.dart';
 
 class AddToCart extends StatelessWidget {
   String image;
+  TextEditingController user = TextEditingController();
   String title = "";
   String price = "";
   String stars = "";
@@ -19,7 +20,7 @@ class AddToCart extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: Icon(Icons.arrow_back_rounded),
+        leading: IconButton(icon: new Icon( Icons.arrow_back),onPressed: (){ Navigator.pop(context);},),
         title: Text("Add to Cart"),
         backgroundColor: Colors.orange,
       ),

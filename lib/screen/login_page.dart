@@ -2,12 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:food_order_app/screen/add_new_food.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:food_order_app/screen/home_page.dart';
 import 'package:food_order_app/screen/welcome_page.dart';
 import 'package:food_order_app/widgets/text_field.dart';
 import 'package:get/get.dart';
-
-import 'home_page.dart';
 
 class LoginPage extends StatelessWidget {
   final _formkey = GlobalKey<FormState>();
@@ -61,7 +60,7 @@ class LoginPage extends StatelessWidget {
                 height: 60,
                 width: 200,
                 child: ElevatedButton(
-                  onPressed: () async {
+                  onPressed: () async{
                     var logEmail = loginEmail.text.trim();
                     var logPassword = loginPassword.text.trim();
                     signIn(logEmail, logPassword);
@@ -89,7 +88,7 @@ class LoginPage extends StatelessWidget {
         .then((DocumentSnapshot documentSnapshot) {
       if (documentSnapshot.exists) {
         if (documentSnapshot.get('roll') == "user") {
-          Get.to(() => HomePage());
+          Get.to(() => HomePage(loginEmail));
         }
       } else {
         print('Document does not exist on the database');
@@ -107,9 +106,23 @@ class LoginPage extends StatelessWidget {
       route();
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        print('No user found for that email.');
+        Fluttertoast.showToast(
+            msg: "Invalid Email",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+            fontSize: 16.0);
       } else if (e.code == 'wrong-password') {
-        print('Wrong password provided for that user.');
+        Fluttertoast.showToast(
+            msg: "Invalid Password",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+            fontSize: 16.0);
       }
     }
   }
