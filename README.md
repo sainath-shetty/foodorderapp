@@ -9,5 +9,4 @@ https://github.com/sainath-shetty/foodorderapp/assets/86493033/f6448490-f8c5-489
 derapp/assets/86493033/d318a8e2-7e6a-4ac9-beab-e715793eb100)
 
 
-https://github.com/sainath-shetty/foodorderapp/assets/86493033/83fc11ee-227a-4e04-9a1a-296bdb3de904
 
